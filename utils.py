@@ -1,6 +1,8 @@
 import MeCab
 import neologdn
 import mojimoji
+import numpy as np
+
 
 
 def  normalize_text(text):
@@ -45,3 +47,9 @@ def text_to_words(text):
 
     basic_words = ' '.join(basic_words)
     return basic_words
+
+
+def label_to_one_hot(label_size, label):
+    vector = np.zeros((label_size),dtype=int)
+    vector[label] = 1
+    return vector
