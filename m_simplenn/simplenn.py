@@ -58,8 +58,6 @@ class Simplenn(object):
 
 
     def test(self, x_test, y_test):
-        print('Start to test.')
-        score = self.model.evaluate(x_test, y_test, verbose=0)
+        score = self.model.evaluate(x_test, y_test, verbose=1)
         print('Test loss:', score[0])
         print('Test accuracy:', score[1])
-        print('Finish to test.')
