@@ -2,6 +2,8 @@ import MeCab
 import neologdn
 import mojimoji
 import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
 
 
 
@@ -53,3 +55,21 @@ def label_to_one_hot(label_size, label):
     vector = np.zeros((label_size),dtype=int)
     vector[label] = 1
     return vector
+
+
+class ComputeTfidf(object):
+    def __init__(self, corpus):
+        self.cv = CountVectorizer()
+        self.ttf = TfidfTransformer()
+        self.corpus = corpus
+        self.tf, self.tfidf = None, None
+
+
+    def compute_tf(self):
+        self.tf = self.cv.fit_transform(self.corpus)
+        return self.tf
+
+
+    def compute_tfidf(self):
+        self.tfidf = self.ttf.fit_transform(self.tf)
+        return self.tfidf
