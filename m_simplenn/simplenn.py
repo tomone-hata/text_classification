@@ -7,7 +7,7 @@ from keras.utils import np_utils
 
 class Simplenn(object):
     def __init__(self, x_dim, n_classes, hidden_size=[32,32], batch_size=32, \
-                 learning_rate=0.01, epochs=10, random_seed=None, class_weight=None):
+                 learning_rate=0.01, epochs=10, random_seed=None, class_weight=None, dropuout=0):
         model = keras.models.Sequential()
         self.x_dim = x_dim
         self.n_classes = n_classes
@@ -17,6 +17,7 @@ class Simplenn(object):
         self.epochs = epochs
         self.random_seed = random_seed
         self.class_weight = class_weight
+        self.dropuout = dropuout
         self.model = Sequential()
         print('Start to building a neural network.')
         self.build()
@@ -28,14 +29,14 @@ class Simplenn(object):
                                      bias_initializer='zeros', \
                                      activation='relu' \
                                             ))
-        self.model.add(Dropout(0.6))
+        self.model.add(Dropout(self.dropuout))
         self.model.add(keras.layers.Dense(units=self.hidden_size[1], \
                                      input_dim=self.hidden_size[0],
                                      kernel_initializer='glorot_uniform', \
                                      bias_initializer='zeros', \
                                      activation='tanh' \
                                             ))
-        self.model.add(Dropout(0.6))
+        self.model.add(Dropout(self.dropuout))
         self.model.add(keras.layers.Dense(units=self.n_classes, \
                                      input_dim=self.hidden_size[1],
                                      kernel_initializer='glorot_uniform', \
